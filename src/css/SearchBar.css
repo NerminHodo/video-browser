@@ -1,0 +1,21 @@
+ .SearchDiv{
+    display: flex;
+    justify-content: center;
+    margin-top: 1%;
+} 
+.ui-c{
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+input{
+    padding-right: 5%;
+    display: inline-block;
+    height: 40px;
+    font-size: large;
+    width: 60%;
+}
+
+form{
+    width: 40%;
+}

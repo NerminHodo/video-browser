@@ -1,0 +1,15 @@
+.Video{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    
+}
+
+
+.VideoList{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    margin-left: 2%;
+}
+

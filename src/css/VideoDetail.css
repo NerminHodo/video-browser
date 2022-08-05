@@ -1,0 +1,8 @@
+.videoDetail{
+    display: flex;
+    margin-left: 2%;;
+}
+
+.thumbnailText{
+    font-size: smaller;
+}
