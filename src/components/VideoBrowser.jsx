@@ -3,6 +3,7 @@ import "../css/VideoBrowser.css";
 import axios from "axios";
 import SearchBar from "./SearchBar";
 import VideoList from "./VideoList";
+import { getVideos, search, getVideoComments } from "../API";
 
 function VideoBrowser() {
   const key = process.env.REACT_APP_YT_API_KEY;
@@ -10,67 +11,38 @@ function VideoBrowser() {
   const [searchTerm, setSearchTerm] = useState("Reactjs");
   const [selected, setSelected] = useState("Javascript");
   const [data, setData] = useState("");
-  const [selectData, setSelectData] = useState("");
-
-  useEffect(() => {
-    console.log("loading");
-    search();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const [selectData, setSelectData] = useState({
+    id: { videoId: "WcyFd3kPz9k" },
+  });
+  const [comments, setComments] = useState([]);
 
   //Search for new videos after one is selected with the selected as the new search term
   useEffect(() => {
-    async function test() {
-      try {
-        const response = await axios.get(
-          "https://www.googleapis.com/youtube/v3/search",
-          {
-            params: {
-              key: key,
-              part: "snippet",
-              maxResults: 5,
-              q: selected,
-              type: "video",
-            },
-          }
-        );
-        setData(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    getVideos(key, selected, setData);
+  }, [selected]);
 
-    test();
-  }, [key, selected]);
-
-  async function search() {
-    try {
-      const response = await axios.get(
-        "https://www.googleapis.com/youtube/v3/search",
-        {
-          params: {
-            key: key,
-            part: "snippet",
-            maxResults: 5,
-            q: searchTerm,
-            type: "video",
-          },
-        }
-      );
-      setData(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+  function searchYT() {
+    search(key, searchTerm, setData);
   }
+
+  const headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  };
+
+  useEffect(() => {
+    getVideoComments(key, selectData.id.videoId, headers, setComments);
+  }, [selectData]);
 
   return (
     data && (
       <div className="VideoBrowser">
-        <SearchBar setSearchTerm={setSearchTerm} search={search} />
+        <SearchBar setSearchTerm={setSearchTerm} searchYT={searchYT} />
 
         <div className="Video">
           {
             <VideoList
+              comments={comments}
               data={data}
               player={false}
               setSelected={setSelected}

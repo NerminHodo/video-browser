@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/SearchBar.css";
 
-function SearchBar({searchTerm, setSearchTerm, search }) {
+function SearchBar({searchTerm, setSearchTerm, searchYT }) {
 
   function handleChange(e) {
     setSearchTerm(e.target.value);
@@ -9,14 +9,14 @@ function SearchBar({searchTerm, setSearchTerm, search }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    search();
+    searchYT();
   }
 
   return (
     <div>
       <form onSubmit={handleSubmit} className="ui action left icon input ui-c">
         <i className="search icon"></i>
-        <input
+        <input id="searchBar"
           onChange={handleChange}
           className="prompt"
           type="text"
